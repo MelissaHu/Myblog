@@ -467,10 +467,12 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
           if (err) {
             return callback(err);
           }
-          callback(err, post[0]);
+           callback(err, post.ops[0]);
         });
+       
       });
     });
+    
   });
 };
 
