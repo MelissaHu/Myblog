@@ -2,14 +2,25 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require("./routes/index");
 var settings = require('./settings');
 var flash = require('connect-flash');
 var multer = require('multer');
+// var FileStreamRotator= require('file-stream-rotator');
 var app = express();
 
+// var logDirectory = __dirname + '/logs';
+
+// fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+
+// var accessLogStream = FileStreamRotator.getStream({
+//    filename:logDirectory + '/access-%DATE%.log',
+//    frequency:'daily',
+//    verbose:false
+// })
 
 // view engine setup
 // app.set('port',process.env.PORT || 8000);
@@ -20,6 +31,7 @@ app.use(flash());  //外面直接下载的模块引用后，要使用前要加�
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+// app.use(logger('combined', {stream: accessLogStream}))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

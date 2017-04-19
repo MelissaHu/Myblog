@@ -1,6 +1,6 @@
 var mongodb = require('./db'),
-    markdown = require('markdown').markdown;
-
+    markdown = require('markdown').markdown,
+    ObjectID = require('mongodb').ObjectID;
 
 function Post(name, head, title, tags, post) {    //构造函数的函数名一般都是大些字母
   this.name = name;
@@ -104,7 +104,7 @@ Post.getTen = function(name, page, callback) {
 };
 
   //获取一篇文章
-Post.getOne = function(name, day, title, callback) {
+Post.getOne = function(_id, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -118,9 +118,7 @@ Post.getOne = function(name, day, title, callback) {
       }
       //根据用户名、发表日期及文章名进行查询
       collection.findOne({
-        "name": name,
-        "time.day": day,
-        "title": title
+        "_id": new ObjectID(_id)
       }, function (err, doc) {
         if (err) {
           mongodb.close();
@@ -129,9 +127,7 @@ Post.getOne = function(name, day, title, callback) {
         if (doc) {
           //每访问 1 次，pv 值增加 1
           collection.update({
-            "name": name,
-            "time.day": day,
-            "title": title
+            "_id": new ObjectID(_id)
           }, {
             $inc: {"pv": 1}
           }, function (err) {
@@ -153,7 +149,7 @@ Post.getOne = function(name, day, title, callback) {
 };
 
 //返回原始发表的内容（markdown 格式）
-Post.edit = function(name, day, title, callback) {
+Post.edit = function(_id, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -167,9 +163,7 @@ Post.edit = function(name, day, title, callback) {
       }
       //根据用户名、发表日期及文章名进行查询
       collection.findOne({
-        "name": name,
-        "time.day": day,
-        "title": title
+        "_id": new ObjectID(_id)
       }, function (err, doc) {
         mongodb.close();
         if (err) {
@@ -182,7 +176,7 @@ Post.edit = function(name, day, title, callback) {
 };
 
 //更新一篇文章及其相关信息
-Post.update = function(name, day, title, post, callback) {
+Post.update = function(_id, post, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -196,9 +190,7 @@ Post.update = function(name, day, title, post, callback) {
       }
       //更新文章内容
       collection.update({
-        "name": name,
-        "time.day": day,
-        "title": title
+        "_id": new ObjectID(_id)
       }, {
         $set: {post: post}
       }, function (err) {
@@ -213,7 +205,7 @@ Post.update = function(name, day, title, post, callback) {
 };
 
 //删除一篇文章
-Post.remove = function(name, day, title, callback) {
+Post.remove = function(_id, callback) {
   //打开数据库
   mongodb.open(function (err, db) {
     if (err) {
@@ -227,9 +219,7 @@ Post.remove = function(name, day, title, callback) {
       }
       //查询要删除的文档
       collection.findOne({
-        "name": name,
-        "time.day": day,
-        "title": title
+       "_id": new ObjectID(_id)
       }, function (err, doc) {
         if (err) {
           mongodb.close();
@@ -249,9 +239,7 @@ Post.remove = function(name, day, title, callback) {
           }, {
             $pull: {
               "reprint_info.reprint_to": {
-                "name": name,
-                "day": day,
-                "title": title
+               "_id": new ObjectID(_id)
             }}
           }, function (err) {
             if (err) {
@@ -263,9 +251,7 @@ Post.remove = function(name, day, title, callback) {
 
         //删除转载来的文章所在的文档
         collection.remove({
-          "name": name,
-          "time.day": day,
-          "title": title
+          "_id": new ObjectID(_id)
         }, {
           w: 1
         }, function (err) {
@@ -411,9 +397,7 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
       }
       //找到被转载的文章的原文档
       collection.findOne({
-        "name": reprint_from.name,
-        "time.day": reprint_from.day,
-        "title": reprint_from.title
+        "Id": reprint_from._id
       }, function (err, doc) {
         if (err) {
           mongodb.close();
@@ -442,9 +426,8 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
 
         //更新被转载的原文档的 reprint_info 内的 reprint_to
         collection.update({
-          "name": reprint_from.name,
-          "time.day": reprint_from.day,
-          "title": reprint_from.title
+          "id": reprint_from.id
+          
         }, {
           $push: {
             "reprint_info.reprint_to": {
