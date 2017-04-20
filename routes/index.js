@@ -277,7 +277,7 @@ app.get('/search', function (req, res) {
   });
 });
 
-app.post('/u/:name/:day/:title', function (req, res) {
+app.post('/p/:_id', function (req, res) {
   var date = new Date(),
       time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
              date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
@@ -292,7 +292,8 @@ var comment = {
     time: time,
     content: req.body.content
 };
-  var newComment = new Comment(req.params.name, req.params.day, req.params.title, comment);
+
+  var newComment = new Comment(req.params._id, comment);
   newComment.save(function (err) {
     if (err) {
       req.flash('error', err); 
@@ -351,23 +352,26 @@ app.get('/remove/:_id', function (req, res) {
 
 app.get('/reprint/:_id', checkLogin);  
 app.get('/reprint/:_id', function (req, res) {  
-    Post.edit(req.params._id, 
-    function (err, post) {  
+    Post.edit(req.params._id, function (err, post) {  
             if (err) {  
                 req.flash('error', err);   
                 return res.redirect(back);  
             }  
+           
   var currentUser = req.session.user,  
-      reprint_from = {id: post._id,name: post.name},  
-      reprint_to = {name: currentUser.name, head: currentUser.head};  
+      reprint_from = {id:post._id, name:post.name, day:post.time.day, title:post.title},  
+      reprint_to = {name: currentUser.name, head: currentUser.head}; 
+    
       Post.reprint(reprint_from, reprint_to, function (err, post) {  
                 if (err) {  
                     req.flash('error', err);   
                     return res.redirect('back');  
                 }  
                 req.flash('success', '转载成功!');  
+              
                 var url = '/p/' + post._id;  
-                res.redirect(url);  
+                res.redirect(url);
+            
             });  
         });  
     });  

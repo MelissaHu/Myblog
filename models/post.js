@@ -397,7 +397,9 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
       }
       //找到被转载的文章的原文档
       collection.findOne({
-        "Id": reprint_from._id
+        "name": reprint_from.name,
+        "time.day": reprint_from.day,
+        "title": reprint_from.title
       }, function (err, doc) {
         if (err) {
           mongodb.close();
@@ -426,8 +428,9 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
 
         //更新被转载的原文档的 reprint_info 内的 reprint_to
         collection.update({
-          "id": reprint_from.id
-          
+          "name": reprint_from.name,
+          "time.day": reprint_from.day,
+          "title": reprint_from.title,
         }, {
           $push: {
             "reprint_info.reprint_to": {
@@ -450,6 +453,8 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
           if (err) {
             return callback(err);
           }
+          // console.log("lalal",post.ops[0]);
+        
            callback(err, post.ops[0]);
         });
        
@@ -458,6 +463,8 @@ Post.reprint = function(reprint_from, reprint_to, callback) {
     
   });
 };
+
+
 
 
 
