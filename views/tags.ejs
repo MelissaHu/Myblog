@@ -1,5 +1,18 @@
 <%- include header %>
-<% posts.forEach(function (tag, index) { %>
+<section class="content-wrap">
+  <div class="container">
+    <div class="row">
+      <main class="col-md-8 main-content-f col-md-offset-2"> 
+<div class="widget">
+	<h4 class="title">标签云</h4>
+	<div class="content tag-cloud">
+     <% posts.forEach(function (tag, index) { %>
   <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
 <% }) %>
+	</div>
+</div>
+</main>
+</div>
+</div>
+</section>
 <%- include footer %>

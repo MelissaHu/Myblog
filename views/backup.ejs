@@ -1,0 +1,165 @@
+<修改页面的转载  article.ejs>
+<p>
+ <% if (post.reprint_info.reprint_from) { %>
+  <br><a href="/p/<%= post.reprint_info.reprint_from.id %>">原文链接</a>
+<% } %>
+ <% if (user && (user.name == post.name)) { %>
+  <span><a class="edit" href="/edit/<%= post._id %>">编辑</a></span>
+  <span><a class="edit" href="/remove/<%= post._id %>">删除</a></span>
+<% } %>
+<% var flag = 1 %>
+
+<% if (user && (user.name != post.name)) { %>
+  <% if ((post.reprint_info.reprint_from != undefined) && (user.name == post.reprint_info.reprint_from.name)) { %>
+    <% flag = 0 %>
+  <% } %>
+  <% if ((post.reprint_info.reprint_to != undefined)) { %>
+    <% post.reprint_info.reprint_to.forEach(function (reprint_to, index) { %>
+      <% if (user.name == reprint_to.name) { %>
+        <% flag = 0 %>
+      <% } %>
+    <% }) %>
+  <% } %>
+<% } else { %>
+  <% flag = 0 %>
+<% } %>
+<% if (flag) { %>
+  <span><a class="edit" href="/reprint/<%= post._id%>">转载</a></span>
+<% } %>
+</p>
+
+
+主文章页面的 转载 index.ejs
+<% if (post.reprint_info.reprint_from) { %>
+                     <br><a href="/p/<%= post.reprint_info.reprint_from.id %>">原文链接</a>
+                         <% } %>
+
+
+留言板 。comment.ejs
+
+
+<br />
+<% post.comments.forEach(function (comment, index) { %>
+  <div style="padding-left:4em">
+    <p><img src="<%= comment.head %>" class="l_head" /><a href="<%= comment.website %>"><%= comment.name %></a>
+    <span class="info"> 回复于 <%= comment.time %></span></p>
+    <p><%- comment.content %></p>
+  </div>
+<% }) %>
+
+<div class="post-head"> 
+<div class="post-meta">
+<form method="post">
+<% if (user) { %>
+<div class="form-group">
+  <span >姓名：<input type="text" name="name" value="<%= user.name %>" />
+  邮箱：<input type="text" name="email" value="<%= user.email %>" />
+  网址：<input type="text" name="website" value="/p/<%= post._id %>" /></span></div>
+<% } else { %>
+  <span >姓名：<input type="text" name="name" />
+  邮箱：<input type="text" name="email" />
+  网址：<input type="text" name="website" value="http://" /></span>
+<% } %>
+  <textarea name="content" rows="5" cols="80" class="form-control"></textarea><br />
+  <input type="submit" value="留言" class="btn btn-warning" />
+</form>
+</div>
+</div>
+
+
+首页 index.ejs
+
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>博客</title> 
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.5/styles/monokai_sublime.min.css">
+    <link href="https://cdn.bootcss.com/magnific-popup.js/1.0.0/magnific-popup.min.css" rel="stylesheet">
+    <link rel="stylesheet" href='/stylesheets/style.css'>
+    <link rel="stylesheet" href='/stylesheets/reset.css'>
+    <link rel="canonical" href="http://www.ghostchina.com/" />
+    <meta name="referrer" content="origin" />
+    <link rel="next" href="http://www.ghostchina.com/page/2/" />
+    <meta name="generator" content="Ghost 0.7" />
+    <link rel="alternate" type="application/rss+xml" title="Ghost 开源博客平台" href="http://www.ghostchina.com/rss/" />
+</head>
+
+<body class="home-template">
+   <nav class="main-navigation">
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-12">
+                  <div class="navbar-header">
+                     <span class="nav-toggle-button collapsed" data-toggle="collapse" data-target="#main-menu">
+                        <span class="sr-only">toggle navigation</span>
+                        <i class="fa fa-bars"></i>
+                     </span>
+                  </div>
+                  <div class="collapse navbar-collapse" id="main-menu">   
+                      <ul class="menu">
+                           <li class="logo">Melissa的个人博客</li>
+                           <li role="presentation"><a title="主页" href="/" class="top">首页</a</li>
+                           <li  role="presentation"><a title="存档" href="/archive" class="top">归档</a></li>
+                           <li  role="presentation"><a title="关于" href="/about" class="top">关于</a></li>
+                           <% if (user) { %>
+                           <li  role="presentation"><a title="发表" href="/post" class="top">发表</a></li>
+                           <li  role="presentation"><a title="登出" href="/logout" class="top">登出</a></li>
+                           <li  role="presentation"><a title="上传" href="/upload" class="top">上传</li>
+                           <li  role="presentation"><a title="存档" href="/archive" class="top">存档</a></li>
+                           <li  role="presentation"><a title="标签" href="/tags" class="top">标签</a></li>
+                           <li  role="presentation"><a title="友情链接" href="/links" class="top">友情链接</a></li>
+                           <li  role="presentation"><a title="用户信息" href="/user" class="top">用户信息</a></li>
+                           <% } else { %>
+                           <li  role="presentation"><a title="登录" href="/login" class="top">登录</a></li>
+                           <li  role="presentation"><a title="注册" href="/reg" class="top">注册</a></li>
+                           <% } %>
+                      </ul>   
+                 </div>
+              </div>
+          </div>
+     </div>
+   </nav>
+
+
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="display:none;">
+<tr>
+<td width="110" align="left"><h1><%= title %></h1></td>
+<td width="auto" align="left">
+<div id="search">
+<form action="/search" method="GET">
+<div style="width:276px;height:28px;background-size:276px 28px;background-image:url('https://www.v2ex.com/static/img/qbar_light@2x.png');background-repeat:no-repeat;display:inline-block;">
+<input type="text" name="keyword"  maxlength="40" id="q"/>
+</div>
+</form>
+</div>
+</td>
+<td width="570" align="right" style="padding-top:2px;">
+<nav>
+<span><a title="主页" href="/" class="top">主页</a></span>
+<% if (user) { %>
+  <span><a title="发表" href="/post" class="top">发表</a></span>
+  <span><a title="登出" href="/logout" class="top">登出</a></span>
+  <span><a title="上传" href="/upload" class="top">上传</a></span>
+  <span><a title="存档" href="/archive" class="top">存档</a></span>
+  <span><a title="标签" href="/tags" class="top">标签</a></span>
+  <span><a title="友情链接" href="/links" class="top">友情链接</a></span>
+  <span><a title="用户信息" href="/user" class="top">用户信息</a></span>
+<% } else { %>
+  <span><a title="登录" href="/login" class="top">登录</a></span>
+  <span><a title="注册" href="/reg" class="top">注册</a></span>
+<% } %>
+</nav>
+</td>
+</tr>
+<span>
+</table>
+
+
+

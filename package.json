@@ -19,6 +19,7 @@
     "connect-flash":"~0.1.1",
     "markdown":"0.5.0",
     "multer":"0.1.8",
-    "file-stream-rotator":"~0.1.0"
+    "file-stream-rotator":"~0.1.0",
+    "async":"~2.3.0"
   }
 }

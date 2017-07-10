@@ -1,32 +1,110 @@
 <%- include header %>
-<% posts.forEach(function (post, index) { %>
-  <p><h2><% if (post.reprint_info.reprint_from) { %>
-  <br><a href="/p/<%= post.reprint_info.reprint_from.id %>">原文链接</a>
-<% } %>
-  <a href="/p/<%= post._id %>"><%= post.title %></a>
-  <a href="/u/<%= post.name %>"><img src="<%= post.head %>" class="r_head" /></a></h2></p>
-  
-  <p class="info">
-  作者：<a href="/u/<%= post.name %>"><%= post.name %></a> | 
-  日期：<%= post.time.minute %> | 
-  标签：
-  <% post.tags.forEach(function (tag, index) { %>
+<section class="content-wrap">
+  <div class="container">
+    <div class="row">
+      <main class="col-md-8 main-content"> 
+         <% posts.forEach(function (post, index) { %>
+           <article class="post">
+              <div class="post-head">
+                  <h2 class="post-title">
+                     <a href="/p/<%= post._id %>"><%= post.title %></a>
+                  </h2>
+                  <div class="post-meta">
+                  <span class="author"> 作者：<a href="/u/<%= post.name %>"><%= post.name %></a> </span> •
+                  <span class="post-date">日期：<%= post.time.minute %> </span> •
+                  <span class="kinds">类别：<a href="/kinds/<%=post.kinds %>"><%= post.kinds %></a></span>
+                 </div>
+              </div>
+              <div class="post-content">
+                  <p><%- post.post %></p>
+              </div>
+              <div class="post-permalink">
+                  <a href="/p/<%= post._id %>" class="btn btn-default">阅读全文</a>
+              </div>
+           <div>
+          <footer class="post-footer clearfix">
+          <div class="pull-left tag-list">
+          <span>标签：<% post.tags.forEach(function (tag, index) { %>
+                    <% if (tag) { %>
+                       <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
+                    <% } %>
+                <% }) %>
+          </span>
+          </div>
+         <div class="pull-right share">
+           <p class="info">
+           阅读量：<%= post.pv %> 
+          </p>    
+       </div>
+       </footer>
+       </div>
+       </article>
+    <% }) %>
+    
+      </main>
+      <aside class="col-md-4 sidebar">
+      <div class="widget">
+	<h4 class="title">推荐阅读</h4>
+	<div class="content download">
+   <% posts.forEach(function (post, index) { %>	
+    <% if (post.top_article==001) { %>
+     <a href="/p/<%= post._id %>"><%= post.title %></a></br>
+	 <% } %>
+   <% }) %>
+  </div>
+</div>
+           <div class="widget">
+	<h4 class="title">分类</h4>
+	<div class="content community">
+        <p> <a href="/kinds/kind1" name="kind1">kind1</a></p>
+        <p> <a href="/kinds/kind2" name="kind2">kind2</a></p>
+        <p> <a href="/kinds/kind3" name="kind3">kind3</a></p>
+		</div>
+</div>
+
+
+ 
+<div class="widget">
+	<h4 class="title">标签云</h4>
+	<div class="content tag-cloud">
+     <% posts.forEach(function (post, index) { %>	
+     <% post.tags.forEach(function (tag, index) { %>
     <% if (tag) { %>
       <a class="tag" href="/tags/<%= tag %>"><%= tag %></a>
     <% } %>
   <% }) %>
-</p>
-  <p><%- post.post %></p>
-  <p class="info">
-  阅读：<%= post.pv %> | 
-  评论：<%= post.comments.length %> | 
-  转载：
-  <% if (post.reprint_info.reprint_to) { %>
-    <%= post.reprint_info.reprint_to.length %>
-  <% } else { %>
-    <%= 0 %>
-  <% } %>
-</p>
-  <% }) %>
+   <% }) %>
+	</div>
+</div>
+
+
+<div class="widget">
+	<h4 class="title">友情链接</h4>
+	<div class="content tag-cloud">
+   
+<a href="https://love.alipay.com/donate/donateSingle.htm?name=201304201216494301">支付宝公益网</a></li>
+<a href="http://www.onefoundation.cn/html/cn/beneficence.html">壹基金</a></li>
+
+	</div>
+</div>
+
+                   
+      </aside>
+
+
+
+    </div>
+   </div>
+ </section> 
+ <%- include paging %>
 <%- include footer %>
-<%- include paging %>
+
+
+ <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="//cdn.bootcss.com/fitvids/1.1.0/jquery.fitvids.min.js"></script>
+    <script src="//cdn.bootcss.com/highlight.js/8.5/highlight.min.js"></script>
+
+   
+
+   

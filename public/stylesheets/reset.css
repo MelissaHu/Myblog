@@ -1,0 +1,36 @@
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-register {
+    padding: 15px;
+}
+
+.widget-bg {
+    background: #fff;
+    border-radius: 6px;
+}
+
+.form-signin-heading {
+    text-align: center;
+}
+
+
+/*#yon {
+    visibility: hidden;
+}*/
+
+.main-content-f {
+    background: #fff;
+    padding: 20px 10px;
+}
+
+.res {
+    color: #959595;
+    display: inline-block;
+    font-size: 12px;
+    text-indent: 0.2em;
+    margin: 5px 0px 10px;
+}

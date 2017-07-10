@@ -1,11 +1,51 @@
 <%- include header %>
-<form method="post">
-  标题：<br />
-  <input type="text" name="title" /><br />
-  正文：<br />
-  <textarea name="post" rows="20" cols="100"></textarea><br />
-  <input type="submit" value="发表" /><br />
-  标签：<br />
-<input type="text" name="tag1" /><input type="text" name="tag2" /><input type="text" name="tag3" /><br />
-</form>
+ <div class="container">
+   <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+
+   <form method="post" >
+       <div class="form-group">
+          <label class=" control-label"> 标题：</label>
+          <input type="text" name="title" class="form-control"/> 
+       </div>
+       <div class="form-group">
+          <label class="control-label">分类：</label>
+          <select name="kind" id="kinds" >
+                 <option  name="分类">分类</option>
+                 <option value="kind1" name="kind-1">kind-1</option>
+                 <option value="kind2" name="kind-2">kind-2</option>
+                 <option value="kind3" name="kind-3">kind-3</option>
+          </select>
+          <input type="text" name="kinds" id="txt" /><br>
+          <input type="checkbox" id="top_article" name="top_article" >分享到推荐栏目
+         
+       </div>
+      <div class="form-group">
+         <label class="control-label">正文：</label>
+         <textarea name="post" class="form-control" rows="15"></textarea>
+      </div>
+      <div class="form-group">
+         <label class="control-label">标签：</label>
+         <input type="text" name="tag1" /><input type="text" name="tag2" /><input type="text" name="tag3" /><br />
+      </div>
+      <div class="form-group">
+        <input type="submit" value="发表"class="btn btn-warning" />
+      </div>
+    </form>
+   </div>
+  </div>
+</div>
+<script>
+window.onload = function(){
+    document.getElementById("kinds").onchange = function(){
+        document.getElementById("txt").value = this.value;
+    }
+ 
+}
+
+$("#top_article").change(function() { 
+ $("#top_article").val("001");
+});
+
+</script>
 <%- include footer %>

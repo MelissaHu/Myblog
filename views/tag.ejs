@@ -1,4 +1,9 @@
 <%- include header %>
+<section class=content-wrap>
+<div class="container">
+<div class="row">
+<div class="col-md-12 main-content-f">
+<div class="post-content">
 <ul class="archive">
 <% var lastYear = 0 %>
 <% posts.forEach(function (post, index) { %>
@@ -9,4 +14,9 @@
     <li><a href="/p/<%= post._id %>"><%= post.title %></a></li>
 <% }) %>
 </ul>
+</div>
+</div>
+</div>
+</div>
+</section>
 <%- include footer %>

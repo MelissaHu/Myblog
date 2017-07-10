@@ -1,13 +1,44 @@
-<%- include header %>
-<% if (success) { %>
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>博客</title> 
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/8.5/styles/monokai_sublime.min.css">
+    <link href="https://cdn.bootcss.com/magnific-popup.js/1.0.0/magnific-popup.min.css" rel="stylesheet">
+    <link rel="stylesheet" href='/stylesheets/style.css'>
+    <link rel="stylesheet" href='/stylesheets/reset.css'>
+    <link rel="canonical" href="http://www.ghostchina.com/" />
+    <meta name="referrer" content="origin" />
+    <link rel="next" href="http://www.ghostchina.com/page/2/" />
+    <meta name="generator" content="Ghost 0.7" />
+    <link rel="alternate" type="application/rss+xml" title="Ghost 开源博客平台" href="http://www.ghostchina.com/rss/" />
+</head>
+
+<body class="home-template">
+
+<div class="container">
+ <div class="widget-bg col-md-4 col-md-offset-4">
+ <% if (success) { %>
   <div><%= success %></div>
 <% } %>
 <% if (error) { %>
   <div><%= error %> </div>
 <% } %>
-<form method="post">
-  用户名：<input type="text" name="name"/><br />
-  密码：  <input type="password" name="password"/><br />
-         <input type="submit" value="登录"/>
-</form>
-<%- include footer %>
+      <form class="form-signin" method="post">
+        <h2 class="form-signin-heading">登录</h2>
+        <label  class="sr-only" >用户名</label>
+        <input name="name"  class="form-control" required autofocus placeholder="用户名"></br>
+        <label  class="sr-only">密码</label>
+        <input name="password"  class="form-control"  placeholder="密码" required>
+        <a href="http://localhost:4000/reg" class="res">去注册?</a></br>
+        <button class="btn btn-lg btn-warning btn-block" type="submit" value="登录">登录</button></br>
+      </form>
+    </div> 
+</div> 
+</body>
+</html>

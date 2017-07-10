@@ -1,13 +1,25 @@
 <%- include header %>
+<section class="content-wrap">
+  <div class="container">
+    <div class="row">
+      <main class="col-md-8 col-md-offset-2 main-content"> 
+      <article class="post"> 
 <form method="post">
-  标题：<br />
-  <input type="text" name="title" value="<%= post.title %>" disabled="disabled" /><br />
-  标签：<br />
+  <label>标题：</label>
+  <input type="text" class="form-control" name="title" value="<%= post.title %>" disabled="disabled" /><br />
+  <label>标签：</label>
+  <div class="form-group">
   <input type="text" name="tag1" value="<%= post.tags[0] %>" disabled="disabled" />
   <input type="text" name="tag2" value="<%= post.tags[1] %>" disabled="disabled" />
-  <input type="text" name="tag3" value="<%= post.tags[2] %>" disabled="disabled" /><br />
-  正文：<br />
-  <textarea name="post" rows="20" cols="100"><%= post.post %></textarea><br />
-  <input type="submit" value="保存修改" />
+  <input type="text" name="tag3" value="<%= post.tags[2] %>" disabled="disabled" /></div>
+  <label>正文：</label>
+  <textarea name="post" class="form-control" rows="15"><%= post.post %></textarea></br>
+  <input type="submit" value="保存修改" class="btn  btn-warning btn-block"/>
 </form>
+
+</article>
+</main>
+</div>
+</div>
+</section>
 <%- include footer %>

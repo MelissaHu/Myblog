@@ -7,16 +7,21 @@
   </div>
 <% }) %>
 
+<div class="post-head"> 
+<div class="post-meta">
 <form method="post">
 <% if (user) { %>
-  姓名：<input type="text" name="name" value="<%= user.name %>" /><br />
-  邮箱：<input type="text" name="email" value="<%= user.email %>" /><br />
-  网址：<input type="text" name="website" value="/p/<%= post._id %>" /><br />
+<div class="form-group">
+  <span >姓名：<input type="text" name="name" value="<%= user.name %>" />
+  邮箱：<input type="text" name="email" value="<%= user.email %>" />
+  网址：<input type="text" name="website" value="/p/<%= post._id %>" /></span></div>
 <% } else { %>
-  姓名：<input type="text" name="name" /><br />
-  邮箱：<input type="text" name="email" /><br />
-  网址：<input type="text" name="website" value="http://" /><br />
+  <span >姓名：<input type="text" name="name" />
+  邮箱：<input type="text" name="email" />
+  网址：<input type="text" name="website" value="http://" /></span>
 <% } %>
-  <textarea name="content" rows="5" cols="80"></textarea><br />
-  <input type="submit" value="留言" />
+  <textarea name="content" rows="5" cols="80" class="form-control"></textarea><br />
+  <input type="submit" value="留言" class="btn btn-warning" />
 </form>
+</div>
+</div>
